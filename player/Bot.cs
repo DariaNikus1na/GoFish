@@ -1,47 +1,19 @@
 ﻿using GoFish.card;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace GoFish.player
 {
-    internal class Protagonist : Player
+    internal class Bot : Player
     {
-        private List<Card> ProtagonistCards;
+        private List<Card> BotCards;
 
-        public Protagonist(List<Card> cards)
+        public Bot(List<Card> cards)
         {
-            this.ProtagonistCards = cards;
-        }
-
-        void Player.CountFours()
-        {
-
-        }
-
-        void Player.GoFish(List<Card> pool)
-        {
-            Random random = new Random();
-            ProtagonistCards.Add(pool[random.Next(0,51)]);
-        }
-
-        public void ShowProtagonistCards() 
-        { 
-            foreach (var card in ProtagonistCards)
-                Console.Write($"|{card}| ");
-            Console.WriteLine();
-        }
-
-        Value Player.ChooseCard()
-        {
-            Console.WriteLine("Enter the card number from your deck: ");
-            int index = Convert.ToInt32(Console.ReadLine());
-            index--;
-            Console.Clear();
-            return ProtagonistCards[index].GetValue();
+            this.BotCards = cards;
         }
 
         bool Player.CheckForCard(Value value)
@@ -49,7 +21,7 @@ namespace GoFish.player
             Random random = new Random();
             Console.WriteLine($"- Do you have {value}?");
             int timeDelay = random.Next(3, 6);
-            foreach (var card in ProtagonistCards)
+            foreach (var card in BotCards)
                 if (card.GetValue() == value)
                 {
                     Thread.Sleep(timeDelay * 1000);
@@ -61,25 +33,47 @@ namespace GoFish.player
             return false;
         }
 
+        Value Player.ChooseCard()
+        {
+            Random random = new Random();
+            Console.WriteLine("Bot is choosing a card...");
+            int timeDelay = random.Next(4, 8);
+            Thread.Sleep(timeDelay * 1000);
+            int index = random.Next(0, BotCards.Count);
+            Console.Clear();
+            return BotCards[index].GetValue();
+        }
+
+        void Player.CountFours()
+        {
+            throw new NotImplementedException();
+        }
+
         List<Card> Player.GiveCardForOpponent(Value value)
         {
             List<Card> cardsOfSameValue = new List<Card>();
-            foreach (Card card in ProtagonistCards.ToList())
+            foreach (var card in BotCards.ToArray())
             {
                 if (card.GetValue() == value)
                 {
                     cardsOfSameValue.Add(card);
-                    ProtagonistCards.Remove(card);
+                    BotCards.Remove(card);
                 }
             }
             return cardsOfSameValue;
+        }
+
+        void Player.GoFish(List<Card> pool)
+        {
+            Random random = new Random();
+            BotCards.Add(pool[random.Next(0, pool.Count)]);
         }
 
         void Player.RecieveCardFromOpponent(List<Card> cardsOfSameValue)
         {
             foreach (var card in cardsOfSameValue)
             {
-                ProtagonistCards.Add(card);
+                BotCards.Add(card);
             }
 
         }

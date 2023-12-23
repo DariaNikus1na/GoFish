@@ -25,7 +25,7 @@ namespace GoFish.card
         internal Value GetValue()
         {
             return value;
-        }   
+        }
 
         public override string ToString()
         {

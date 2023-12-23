@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace GoFish.card
 {
-    enum Suit { Diamonds, Hearts, Clubs, Spades }
+    enum Suit { Diamonds= '♦', Hearts= '♥', Clubs= '♣', Spades= '♠' }
 }

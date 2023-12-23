@@ -11,9 +11,10 @@ namespace GoFish.player
     {
         internal Value ChooseCard();
         internal Boolean CheckForCard(Value value);
-        internal void GoFish(Card card);
+        internal void GoFish(List<Card> pool);
         internal void CountFours();
-        internal void GetCard(Player Asker, Value value);
+        internal List<Card> GiveCardForOpponent(Value value);
+        internal void RecieveCardFromOpponent(List<Card> cardsOfSameValue);
         
     }
 }
