@@ -17,9 +17,20 @@ namespace GoFish.card
             this.value = value;
         }
 
-        internal Suit GetSuit()
+        //internal Suit GetSuit()
+        //{
+        //    return suit;
+        //}
+
+        internal char GetSuitSymb()
         {
-            return suit;
+            return Convert.ToChar(suit);
+        }
+        internal string GetValueSymb()
+        {
+            if (value == Value.Tens)
+                return "10";
+            else return Convert.ToString(Convert.ToChar(value));
         }
 
         internal Value GetValue()

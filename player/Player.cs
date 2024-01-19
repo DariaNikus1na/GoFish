@@ -9,10 +9,11 @@ namespace GoFish.player
 {
     internal interface Player
     {
+        internal List<Card> GetPlayersDeck();
+        internal void AddScore();
         internal Value ChooseCard();
         internal Boolean CheckForCard(Value value);
         internal void GoFish(List<Card> pool);
-        internal void CountFours();
         internal List<Card> GiveCardForOpponent(Value value);
         internal void RecieveCardFromOpponent(List<Card> cardsOfSameValue);
         

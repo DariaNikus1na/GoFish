@@ -4,13 +4,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace GoFish.player
 {
     internal class Bot : Player
     {
         private List<Card> BotCards;
-
+        private Int32 Score = 0;
         public Bot(List<Card> cards)
         {
             this.BotCards = cards;
@@ -20,7 +21,7 @@ namespace GoFish.player
         {
             Random random = new Random();
             Console.WriteLine($"- Do you have {value}?");
-            int timeDelay = random.Next(3, 6);
+            int timeDelay = random.Next(2, 5);
             foreach (var card in BotCards)
                 if (card.GetValue() == value)
                 {
@@ -37,16 +38,11 @@ namespace GoFish.player
         {
             Random random = new Random();
             Console.WriteLine("Bot is choosing a card...");
-            int timeDelay = random.Next(4, 8);
+            int timeDelay = random.Next(1, 5);
             Thread.Sleep(timeDelay * 1000);
             int index = random.Next(0, BotCards.Count);
             Console.Clear();
             return BotCards[index].GetValue();
-        }
-
-        void Player.CountFours()
-        {
-            throw new NotImplementedException();
         }
 
         List<Card> Player.GiveCardForOpponent(Value value)
@@ -66,7 +62,9 @@ namespace GoFish.player
         void Player.GoFish(List<Card> pool)
         {
             Random random = new Random();
-            BotCards.Add(pool[random.Next(0, pool.Count)]);
+            Card tempCard = pool[random.Next(0, pool.Count)];
+            BotCards.Add(tempCard);
+            pool.Remove(tempCard);
         }
 
         void Player.RecieveCardFromOpponent(List<Card> cardsOfSameValue)
@@ -76,6 +74,20 @@ namespace GoFish.player
                 BotCards.Add(card);
             }
 
+        }
+        void Player.AddScore()
+        {
+            Score++;
+        }
+
+        public int GetScore()
+        {
+            return Score;
+        }
+
+        List<Card> Player.GetPlayersDeck()
+        {
+            return BotCards;
         }
     }
 }
