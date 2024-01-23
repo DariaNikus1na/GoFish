@@ -18,7 +18,7 @@ internal class GameBoard
 
 
         // ИГРА
-        while (playerDeck1.Count != 0 | playerDeck2.Count != 0 | Pool.Count != 0)
+        while (playerDeck1.Count != 0 && playerDeck2.Count != 0 && Pool.Count != 0)
         {
             bool IsTurnContinues = true;
             while(IsTurnContinues)
@@ -30,7 +30,7 @@ internal class GameBoard
                 CheckForFours(Opponent, Opponent.GetPlayersDeck(), GetSetOfUniqeValues(Opponent.GetPlayersDeck()));
 
                 Value value = ActivePlayer.ChooseCard();
-                if (Opponent.CheckForCard(value))
+                if (Opponent.CheckForCard(value) )
                 {
                     ActivePlayer.RecieveCardFromOpponent(Opponent.GiveCardForOpponent(value));
                 }
@@ -38,11 +38,13 @@ internal class GameBoard
                 {
                     ActivePlayer.GoFish(Pool);
                     IsTurnContinues = false;
+                   
                 }
-
                 Thread.Sleep(1500);
                 Console.Clear();
+                if (playerDeck1.Count == 0 | playerDeck2.Count == 0 | Pool.Count == 0) break;
             }
+            
             Player[] players = NextTurn(ActivePlayer, Opponent);
             ActivePlayer = players[0];
             Opponent = players[1];
@@ -57,19 +59,9 @@ internal class GameBoard
         else { Console.WriteLine("Bot won!"); }
 
 
-            ////Тест методов
-            //Igorek.ShowProtagonistCards();
-            //Value c = ActivePlayer.ChooseCard();
-            //if (Opponent.CheckForCard(c) == true)
-            //{
-            //    ActivePlayer.RecieveCardFromOpponent(Opponent.GiveCardForOpponent(c));
-            //}
-            //else { Opponent.RecieveCardFromOpponent(ActivePlayer.GiveCardForOpponent(c)); }
-            //Igorek.ShowProtagonistCards();
-            ////Тест методов
-
     }
 
+       
         public static Player[] NextTurn(Player ActivePlayer, Player Opponent)
         {
         Player TempPlayer = ActivePlayer;
